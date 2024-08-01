@@ -1,5 +1,5 @@
 *{
-    color: white;
+    color: ${dark-font-color};
 }
 #page #titleWidget{
     background-color: ${dark-bar-color};

@@ -1,7 +1,8 @@
-from PySide6.QtGui import QColor, QCursor
-from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QWidget
 import enum
+
 from PySide6.QtCore import Qt, QRect
+from PySide6.QtGui import QColor, QCursor
+from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect
 
 
 class CursorDirection(enum.Enum):

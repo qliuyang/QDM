@@ -25,6 +25,8 @@ class Ui_Form(object):
         Form.resize(680, 364)
         self.gridLayout_2 = QGridLayout(Form)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setHorizontalSpacing(7)
+        self.gridLayout_2.setContentsMargins(10, 12, 0, 0)
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.bigProgress = QProgressBar(Form)

@@ -3,13 +3,15 @@ import time
 from hashlib import sha256
 from pathlib import Path
 from typing import Dict, List, Tuple
-from PySide6.QtCore import QThread, Signal, QFileInfo, QMutex, QObject
+
 import requests
+from PySide6.QtCore import QThread, Signal, QFileInfo, QMutex, QObject
 from PySide6.QtWidgets import QFileIconProvider, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSpacerItem, QSizePolicy, \
-    QProgressBar, QMenu, QListWidget, QListWidgetItem
-from Ui_MoreInfo import Ui_Form as MoreInfoForm
-from config import Config
+    QMenu, QListWidget, QListWidgetItem
 from qfluentwidgets import ProgressBar
+from qframelesswindow import FramelessWindow
+from Ui_MoreInfo import Ui_Form as MoreInfoForm
+from config import Config,Style
 
 
 def convertBytes(byte) -> Tuple[float, str]:
@@ -270,7 +272,7 @@ class Downloader(QThread):
             'progress': self.progress.progress,
             'downloadRanges': downloadRanges
         }
-        if not self._downloadInfoFile.is_file():
+        if not self._downloadInfoFile:
             return
         with open(self._downloadInfoFile, "w") as f:
             json.dump(self._downloadInfo, f)
@@ -280,7 +282,12 @@ class Downloader(QThread):
 
     def quit(self):
         self.stopDownload()
+        self.clearDownloadInfo()
         super().quit()
+
+    def clearDownloadInfo(self):
+        if self._downloadInfoFile:
+            self._downloadInfoFile.unlink()
 
     def stopDownload(self):
         self.state.rawState = "PAUSE_STATE"
@@ -378,7 +385,7 @@ class DownloadWidget(QWidget):
 
         if action == delete:
             self.downloader.quit()
-            self.close()
+            self.deleteLater()
         elif action == stop:
             self.downloader.stop()
         elif action == continue_:
@@ -417,7 +424,7 @@ class DownloadWidget(QWidget):
         self.mutexSpeed.unlock()
 
 
-class MoreInfo(QWidget, MoreInfoForm):
+class MoreInfo(FramelessWindow, MoreInfoForm):
     def __init__(self, downloader: Downloader):
         super().__init__()
         self.setupUi(self)
@@ -454,7 +461,8 @@ class DownloadWidgetList(QListWidget):
         for i in range(self.count()):
             item = self.item(i)
             item_widget: DownloadWidget = self.itemWidget(item)
-
+            if not item_widget:
+                continue
             if text.startswith(":"):
                 fileType = text[1:]
                 item.setHidden(fileType in item_widget.downloader.fileType)
@@ -486,7 +494,15 @@ class DownloadEngine:
                 self.startDownload(download_info=download_info)
 
     def newDownload(self, url: str):
+        if self.checkRepeatDownloader(url):
+            return
         self.startDownload(url=url)
+
+    def checkRepeatDownloader(self, url: str):
+        for downloader in self._downloaderList:
+            if downloader.fileInfo.url == url:
+                return True
+        return False
 
     def startDownload(self, url=None, download_info=None):
         downloader = self.buildDownloader()

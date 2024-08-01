@@ -1,18 +1,15 @@
-from pathlib import Path
-from typing import Optional, List, Dict, Tuple, Callable
 import re
+from pathlib import Path
+from typing import List, Dict, Tuple, Callable
 
-from PySide6.QtCore import QSize, QRect, Qt
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
-
-from Ui_Setting import Ui_Form as SettingForm
 from PySide6.QtWidgets import QWidget, QPushButton, QLayout, QLabel, \
     QHBoxLayout, \
-    QSpinBox, QToolButton, QFontComboBox, QTextEdit, QSizePolicy, QSpacerItem, QCheckBox, QVBoxLayout, \
+    QSpinBox, QFontComboBox, QSizePolicy, QSpacerItem, QCheckBox, QVBoxLayout, \
     QGridLayout, QFileDialog, QScrollArea
-from config import Config
 from qfluentwidgets import ComboBox, LineEdit, ColorDialog
-import main_rc
+from config import Config
 
 SETTING_VALUE_TYPE = str | List | Dict | int | bool
 
@@ -281,6 +278,7 @@ class SettingComponent:
         pushButton.setIcon(QIcon(':/setting/file.svg'))
         fileDialog = QFileDialog(self.window)
         fileDialog.setWindowTitle(f'select directory with {self._name}')
+        fileDialog.setStyleSheet("color: black;")
         fileDialog.setFileMode(QFileDialog.FileMode.Directory)
         fileDialog.setDirectory(self._defaultValue)
         fileDialog.accepted.connect(lambda: lineEdit.setText(fileDialog.directory().absolutePath()))

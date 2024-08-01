@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
     QVBoxLayout, QWidget)
 
+from CustomWidget import CustomPlainTextEdit
 from DownloadEngine import DownloadWidgetList
 import main_rc
 
@@ -27,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 602)
+        MainWindow.resize(800, 560)
         self.mainWidget = QWidget(MainWindow)
         self.mainWidget.setObjectName(u"mainWidget")
         self.gridLayout_2 = QGridLayout(self.mainWidget)
@@ -43,21 +44,22 @@ class Ui_MainWindow(object):
         self.downloadPageBtn = QPushButton(self.leftBar)
         self.downloadPageBtn.setObjectName(u"downloadPageBtn")
         self.downloadPageBtn.setMinimumSize(QSize(0, 57))
-        icon = QIcon()
-        icon.addFile(u":/toolBar/download.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.downloadPageBtn.setIcon(icon)
         self.downloadPageBtn.setIconSize(QSize(44, 22))
         self.downloadPageBtn.setAutoDefault(False)
         self.downloadPageBtn.setFlat(False)
 
         self.verticalLayout.addWidget(self.downloadPageBtn)
 
+        self.downloadListPageBtn = QPushButton(self.leftBar)
+        self.downloadListPageBtn.setObjectName(u"downloadListPageBtn")
+        self.downloadListPageBtn.setMinimumSize(QSize(0, 57))
+        self.downloadListPageBtn.setIconSize(QSize(47, 22))
+
+        self.verticalLayout.addWidget(self.downloadListPageBtn)
+
         self.settingPageBtn = QPushButton(self.leftBar)
         self.settingPageBtn.setObjectName(u"settingPageBtn")
         self.settingPageBtn.setMinimumSize(QSize(0, 57))
-        icon1 = QIcon()
-        icon1.addFile(u":/toolBar/settings.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.settingPageBtn.setIcon(icon1)
         self.settingPageBtn.setIconSize(QSize(44, 22))
 
         self.verticalLayout.addWidget(self.settingPageBtn)
@@ -91,9 +93,9 @@ class Ui_MainWindow(object):
         self.mainStack = QStackedWidget(self.mainWidget)
         self.mainStack.setObjectName(u"mainStack")
         self.mainStack.setFrameShape(QFrame.NoFrame)
-        self.downloadPage = QWidget()
-        self.downloadPage.setObjectName(u"downloadPage")
-        self.gridLayout = QGridLayout(self.downloadPage)
+        self.downloadListPage = QWidget()
+        self.downloadListPage.setObjectName(u"downloadListPage")
+        self.gridLayout = QGridLayout(self.downloadListPage)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setHorizontalSpacing(0)
         self.gridLayout.setVerticalSpacing(10)
@@ -107,7 +109,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.searchWidget = QWidget(self.downloadPage)
+        self.searchWidget = QWidget(self.downloadListPage)
         self.searchWidget.setObjectName(u"searchWidget")
         self.searchWidget.setMinimumSize(QSize(0, 43))
         self.horizontalLayout = QHBoxLayout(self.searchWidget)
@@ -117,9 +119,9 @@ class Ui_MainWindow(object):
         self.pushButton = QPushButton(self.searchWidget)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setStyleSheet(u" margin-left: 6px;")
-        icon2 = QIcon()
-        icon2.addFile(u":/toolBar/search.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton.setIcon(icon2)
+        icon = QIcon()
+        icon.addFile(u":/toolBar/search.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton.setIcon(icon)
 
         self.horizontalLayout.addWidget(self.pushButton)
 
@@ -131,13 +133,25 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.searchWidget)
 
-        self.downloadList = DownloadWidgetList(self.downloadPage)
+        self.downloadList = DownloadWidgetList(self.downloadListPage)
         self.downloadList.setObjectName(u"downloadList")
 
         self.verticalLayout_2.addWidget(self.downloadList)
 
 
         self.gridLayout.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
+
+        self.mainStack.addWidget(self.downloadListPage)
+        self.downloadPage = QWidget()
+        self.downloadPage.setObjectName(u"downloadPage")
+        self.gridLayout_3 = QGridLayout(self.downloadPage)
+        self.gridLayout_3.setSpacing(0)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.newDownloadEdit = CustomPlainTextEdit(self.downloadPage)
+        self.newDownloadEdit.setObjectName(u"newDownloadEdit")
+
+        self.gridLayout_3.addWidget(self.newDownloadEdit, 0, 0, 1, 1)
 
         self.mainStack.addWidget(self.downloadPage)
 
@@ -151,10 +165,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.iconApp = QPushButton(self.headBar)
         self.iconApp.setObjectName(u"iconApp")
-        icon3 = QIcon()
-        icon3.addFile(u":/toolBar/icon.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.iconApp.setIcon(icon3)
-        self.iconApp.setIconSize(QSize(38, 40))
+        self.iconApp.setMinimumSize(QSize(60, 60))
+        icon1 = QIcon()
+        icon1.addFile(u":/toolBar/QDM.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.iconApp.setIcon(icon1)
+        self.iconApp.setIconSize(QSize(47, 48))
 
         self.horizontalLayout_2.addWidget(self.iconApp)
 
@@ -175,7 +190,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.downloadPageBtn.setDefault(False)
-        self.mainStack.setCurrentIndex(0)
+        self.mainStack.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -184,11 +199,13 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.downloadPageBtn.setText("")
+        self.downloadListPageBtn.setText("")
         self.settingPageBtn.setText("")
-        self.messageLabel.setText(QCoreApplication.translate("MainWindow", u"lllllllllllll", None))
-        self.versionLabel.setText(QCoreApplication.translate("MainWindow", u"lllllllllllllll", None))
+        self.messageLabel.setText(QCoreApplication.translate("MainWindow", u"https://github.com/qliuyang", None))
+        self.versionLabel.setText(QCoreApplication.translate("MainWindow", u"V1.0 Demo", None))
         self.pushButton.setText("")
         self.searchLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter the history download file", None))
+        self.newDownloadEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u8f93\u5165\u7f51\u5740\u6dfb\u52a0\u65b0\u7684\u4e0b\u8f7d\u4efb\u52a1", None))
         self.iconApp.setText("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"QDM - Quick Download Manager", None))
     # retranslateUi

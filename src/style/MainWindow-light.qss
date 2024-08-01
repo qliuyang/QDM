@@ -1,7 +1,6 @@
 *{
     color: ${light-font-color};
 }
-
 #page #titleWidget{
     background-color: ${light-bar-color};
 }

@@ -1,15 +1,20 @@
 <RCC>
-  <qresource prefix="toolBar">
-    <file>search.svg</file>
-    <file>icon_close.png</file>
-    <file>icon_maximize.png</file>
-    <file>icon_minimize.png</file>
-    <file>icon.ico</file>
-    <file>settings.svg</file>
-    <file>download.svg</file>
-  </qresource>
   <qresource prefix="setting">
     <file>file.svg</file>
     <file>palette.svg</file>
+  </qresource>
+  <qresource prefix="light">
+    <file>download-light.svg</file>
+    <file>downloadList-light.svg</file>
+    <file>setting-light.svg</file>
+  </qresource>
+  <qresource prefix="dark">
+    <file>download-dark.svg</file>
+    <file>downloadList-dark.svg</file>
+    <file>setting-dark.svg</file>
+  </qresource>
+  <qresource prefix="toolBar">
+    <file>QDM.png</file>
+    <file>search.svg</file>
   </qresource>
 </RCC>

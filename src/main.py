@@ -1,13 +1,16 @@
 import sys
 
 from PySide6.QtCore import QTranslator
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QPushButton
-from Ui_MainWindow import Ui_MainWindow
-from Setting import Setting, SettingTextCompiler
-from config import Config, Style
-from DownloadEngine import DownloadEngine
-from qframelesswindow import FramelessMainWindow
 from qfluentwidgets import setTheme, Theme
+from qframelesswindow import FramelessMainWindow
+
+from DownloadEngine import DownloadEngine
+from Setting import Setting, SettingTextCompiler
+from Ui_MainWindow import Ui_MainWindow
+from config import Config, Style
+import main_rc
 
 
 class MainWindow(FramelessMainWindow):
@@ -40,6 +43,8 @@ class MainWindow(FramelessMainWindow):
         self.setting = Setting(self.config, self)
         self.initSettingPage()
 
+        self.initUi()
+
         # 创建下载引擎 + 读取历史下载
         self.downloadEngine = DownloadEngine(self.config, self.ui.downloadList)
         self.downloadEngine.readPausedDownload()
@@ -47,7 +52,9 @@ class MainWindow(FramelessMainWindow):
         # 主界面连接信号槽
         self.ui.settingPageBtn.clicked.connect(lambda: self.changeMainStackPage(self.ui.settingPageBtn))
         self.ui.downloadPageBtn.clicked.connect(lambda: self.changeMainStackPage(self.ui.downloadPageBtn))
+        self.ui.downloadListPageBtn.clicked.connect(lambda: self.changeMainStackPage(self.ui.downloadListPageBtn))
         self.ui.searchLineEdit.textChanged.connect(self.search)
+        self.ui.newDownloadEdit.returned.connect(self.downloadEngine.newDownload)
 
         self.titleBar.raise_()
 
@@ -92,8 +99,9 @@ class MainWindow(FramelessMainWindow):
     def changeMainStackPage(self, btn: QPushButton):
         # 映射按钮和对应的页面索引
         btnIndexMap = {
-            self.ui.settingPageBtn: 1,
-            self.ui.downloadPageBtn: 0
+            self.ui.downloadListPageBtn: 0,
+            self.ui.settingPageBtn: 2,
+            self.ui.downloadPageBtn: 1
         }
 
         for button, index in btnIndexMap.items():
@@ -116,6 +124,24 @@ class MainWindow(FramelessMainWindow):
             setTheme(Theme.DARK)
 
         self.enableStyle = self.styleObj.getClickedStyle()
+
+    def setButtonIcons(self):
+        """
+        设置按钮图标
+        """
+        theme = self.styleObj.styleTheme
+        icons = {
+            "settingPageBtn": f":/{theme}/setting-{theme}.svg",
+            "downloadPageBtn": f":/{theme}/download-{theme}.svg",
+            "downloadListPageBtn": f":/{theme}/downloadList-{theme}.svg"
+        }
+        for btn_name, icon_path in icons.items():
+            getattr(self.ui, btn_name).setIcon(QIcon(icon_path))
+
+    def initUi(self):
+        self.ui.downloadPageBtn.setStyleSheet(self.enableStyle)
+        self.setWindowIcon(QIcon(":/toolBar/QDM.png"))
+        self.setButtonIcons()
 
     def getWindowStyle(self) -> Style:
         style = self.windowConfig.get("theme")
