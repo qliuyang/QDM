@@ -1,0 +1,55 @@
+*{
+    font-family: ${font-family};
+    font-size: ${font-basic-size};
+}
+#searchWidget{
+    border: 2px solid grey;
+}
+#scrollAreaWidgetContents, #scrollArea {
+    background-color: transparent;
+    padding: 0px;
+}
+QPushButton{
+    background-color: transparent;
+    border: none;
+}
+QLineEdit{
+    background-color: transparent;
+    border: none;
+    padding: 1px;
+}
+#scrollArea{
+    padding: 0px;
+    border: none;
+}
+
+#searchWidget{
+    background-color: transparent;
+    padding: 3px;
+    border-radius: 6px;
+}
+#page #titleWidget{
+    border-radius: 6px;
+    border: none;
+    padding: 3px;
+}
+#page #titleLabel{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+#iconApp{
+    margin: 4px;
+}
+#mainStack{
+    margin-top: 10px;
+    margin-left: 3px;
+}
+#mainWidget{
+    border-radius: 6px;
+}
+#downloadList{
+    background-color: transparent;
+    border: none;
+}

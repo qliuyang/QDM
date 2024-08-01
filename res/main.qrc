@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="toolBar">
+    <file>search.svg</file>
+    <file>icon_close.png</file>
+    <file>icon_maximize.png</file>
+    <file>icon_minimize.png</file>
+    <file>icon.ico</file>
+    <file>settings.svg</file>
+    <file>download.svg</file>
+  </qresource>
+  <qresource prefix="setting">
+    <file>file.svg</file>
+    <file>palette.svg</file>
+  </qresource>
+</RCC>

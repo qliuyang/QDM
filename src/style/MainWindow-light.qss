@@ -1,0 +1,24 @@
+*{
+    color: ${light-font-color};
+}
+
+#page #titleWidget{
+    background-color: ${light-bar-color};
+}
+QMenu{
+    background-color: ${light-bar-color};
+}
+#mainWidget{
+    background-color: ${light-basic-color};
+}
+
+#headBar{
+    background-color: ${light-bar-color};
+    border-bottom: 4px solid ${light-basic-color};
+}
+#leftBar{
+    background-color: ${light-bar-color};
+}
+#stateBar{
+    background-color: ${light-bar-color};
+}

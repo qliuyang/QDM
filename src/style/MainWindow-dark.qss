@@ -1,0 +1,23 @@
+*{
+    color: white;
+}
+#page #titleWidget{
+    background-color: ${dark-bar-color};
+}
+QMenu{
+    background-color: ${dark-bar-color};
+}
+#mainWidget{
+    background-color: ${dark-basic-color};
+}
+
+#headBar{
+    background-color: ${dark-bar-color};
+    border-bottom: 4px solid ${dark-basic-color};
+}
+#leftBar{
+    background-color: ${dark-bar-color};
+}
+#stateBar{
+    background-color: ${dark-bar-color};
+}

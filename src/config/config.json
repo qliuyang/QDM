@@ -1,0 +1,112 @@
+{
+    "window": {
+        "theme": "dark ? light | dark",
+        "language": "English ? English | Chinese",
+        "windowStyle": {
+            "font-family": "Microsoft YaHei",
+            "font-basic-size": "12px",
+            "font-title-size": "14px",
+            "dark-clickedBtn-color": "#282c34",
+            "light-clickedBtn-color": "#ffffff",
+            "dark-bar-color": "#31353d",
+            "dark-basic-color": "#21252b",
+            "dark-font-color": "#ffffff",
+            "light-bar-color": "#F8f8ff",
+            "light-basic-color": "#ffffff",
+            "light-font-color": "#000000"
+        }
+    },
+    "download": {
+        "tempPath": "C:/Users/LiuYang/Desktop/py/QDM/src/qm",
+        "downloadInfoPath": "C://Users/LiuYang/Desktop/py//QDM/Info",
+        "output": "C:/Users/LiuYang/Desktop//py/QDM/Dist",
+        "fileType": {
+            "compressed": [
+                "zip",
+                "rar",
+                "7z",
+                "gzip",
+                "tar",
+                "bz2",
+                "xz",
+                "iso",
+                "cab",
+                "tgz",
+                "dmg",
+                "pkg",
+                "z",
+                "lz",
+                "zst",
+                "egg"
+            ],
+            "application": [
+                "exe",
+                "dmg",
+                "app",
+                "msi",
+                "deb",
+                "apk",
+                "jar",
+                "rpm",
+                "sh",
+                "bat",
+                "com",
+                "vb",
+                "cmd",
+                "ps1",
+                "wsh",
+                "appx",
+                "ipa",
+                "xap",
+                "swf"
+            ],
+            "video": [
+                "mp4",
+                "avi",
+                "mkv",
+                "mov",
+                "wmv",
+                "flv",
+                "webm",
+                "m4v",
+                "3gp",
+                "mpeg",
+                "mpg",
+                "rm",
+                "vob",
+                "ts",
+                "asf",
+                "divx",
+                "xvid",
+                "rmvb",
+                "ogv"
+            ],
+            "document": [
+                "pdf",
+                "docx",
+                "xlsx",
+                "pptx",
+                "odt",
+                "txt",
+                "rtf",
+                "html",
+                "csv",
+                "xml",
+                "json",
+                "yaml",
+                "ini",
+                "md",
+                "log",
+                "tex",
+                "odp",
+                "ott",
+                "xls",
+                "ods"
+            ]
+        },
+        "proxy": {
+            "http": "127.0.0.1",
+            "https": "127.0.0.1"
+        }
+    }
+}
