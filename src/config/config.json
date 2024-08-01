@@ -1,7 +1,7 @@
 {
     "window": {
         "theme": "dark ? light | dark",
-        "language": "English ? English | Chinese",
+        "language": "Chinese ? English | Chinese",
         "windowStyle": {
             "font-family": "Microsoft YaHei",
             "font-basic-size": "12px",
