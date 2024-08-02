@@ -16,7 +16,6 @@ import main_rc
 class MainWindow(FramelessMainWindow):
     def __init__(self) -> None:
         super().__init__()
-
         self.enableStyle = None
         self.configTran = None
         self.state = None
@@ -83,8 +82,14 @@ class MainWindow(FramelessMainWindow):
             self.tr("document"),
             self.tr("http"),
             self.tr("https"),
-            self.tr('select color with {self._name}'),
-            self.tr('select path with {self._name}'),
+            self.tr("windowStyle"),
+            self.tr('Select color for'),
+            self.tr('select path for'),
+            self.tr('font-family'),
+            self.tr('font-basic-size'),
+            self.tr('font-title-size'),
+            self.tr('dark-clickedBtn-color'),
+            self.tr('light-clickedBtn-color'),
             self.tr('light-bar-color'),
             self.tr('light-basic-color'),
             self.tr('light-font-color'),
@@ -166,6 +171,8 @@ class MainWindow(FramelessMainWindow):
             app.removeTranslator(self.translator)
 
         self.flushText()
+        self.setWindowIcon(QIcon(":/toolBar/QDM.png"))
+        self.setWindowTitle('QDM')
 
     def search(self, text):
         self.ui.downloadList.filterItems(text)

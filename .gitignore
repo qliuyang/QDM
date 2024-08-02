@@ -6,3 +6,5 @@ Info
 PyStand-py38-pyside2-lite
 Temp
 src/__pycache__
+.venv
+installer

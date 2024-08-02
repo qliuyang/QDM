@@ -10,8 +10,14 @@ class Config:
 
     def __init__(self):
         self.config = self.readJson(self.CONFIG_PATH)
+
         self._state = {}
         self._configTran = []
+
+        self._downloadConfig = self.config['download']
+        self._windowConfig = self.config['window']
+
+        self.initDownloadConfig()
 
     @staticmethod
     def readJson(filePath: str | Path) -> Dict:
@@ -20,6 +26,21 @@ class Config:
                 return json.load(f)
         except Exception as e:
             print(e)
+
+    def initDownloadConfig(self):
+        self._setDefaultIfEmpty('tempPath', Path.home() / "Temp")
+        self._setDefaultIfEmpty('downloadInfoPath', Path.cwd() / 'info')
+        self._setDefaultIfEmpty('output', Path.home() / 'Downloads' / 'output')
+        self.save()
+
+    def _setDefaultIfEmpty(self, key, default_path):
+        """
+        如果配置项为空，则设置为默认值
+        :param key: 配置项的键
+        :param default_path: 默认路径
+        """
+        if self._downloadConfig[key] == "":
+            self._downloadConfig[key] = str(default_path)
 
     def save(self):
         with open(self.CONFIG_PATH, "w", encoding='utf-8') as f:

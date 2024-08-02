@@ -280,7 +280,7 @@
         <item row="0" column="0">
          <widget class="CustomPlainTextEdit" name="newDownloadEdit">
           <property name="placeholderText">
-           <string>输入网址添加新的下载任务</string>
+           <string>Enter the URL to add a new download task</string>
           </property>
          </widget>
         </item>

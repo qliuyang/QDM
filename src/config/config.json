@@ -1,6 +1,6 @@
 {
     "window": {
-        "theme": "dark ? light | dark",
+        "theme": "light ? light | dark",
         "language": "Chinese ? English | Chinese",
         "windowStyle": {
             "font-family": "Microsoft YaHei",
@@ -17,9 +17,9 @@
         }
     },
     "download": {
-        "tempPath": "C:/Users/LiuYang/Desktop/py/QDM/src/qm",
-        "downloadInfoPath": "C://Users/LiuYang/Desktop/py//QDM/Info",
-        "output": "C:/Users/LiuYang/Desktop//py/QDM/Dist",
+        "tempPath": "",
+        "downloadInfoPath": "",
+        "output": "",
         "fileType": {
             "compressed": [
                 "zip",

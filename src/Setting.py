@@ -66,7 +66,7 @@ class SettingComponent:
         self._valueChange = valueChange
         self._listValueChange = listValueChange
 
-        self.tr = settingWindow.tr
+        self.translate_ = settingWindow.tr
         self.window = settingWindow
 
         self.typeCompareDict = {
@@ -87,7 +87,7 @@ class SettingComponent:
 
         widget = QWidget()
 
-        valueType = self.compiler.getValueType(displayText, self._defaultValue)
+        valueType = self.compiler.getValueType(name, self._defaultValue)
 
         layout = self.typeCompareDict.get(valueType)
 
@@ -113,7 +113,7 @@ class SettingComponent:
         colorSelectBtn = QPushButton()
         colorSelectBtn.setIcon(QIcon(':/setting/palette.svg'))
         colorSelectBtn.setObjectName("colorSelectBtn")
-        colorDialog = ColorDialog(self._defaultValue, title=f'select color with {self._name}', parent=self.window)
+        colorDialog = ColorDialog(self._defaultValue, title=f'{self.translate_("Select color for")} {self._displayText}', parent=self.window)
         colorDialog.close()
         colorSelectBtn.clicked.connect(lambda: colorDialog.show())
         colorDialog.colorChanged.connect(lambda color: lineEdit.setText(color.name()))
@@ -166,7 +166,7 @@ class SettingComponent:
         layout = QVBoxLayout()
         layout.setSpacing(0)
         for key, val in self._defaultValue.items():
-            widgetComponent = self.buildWidget(key, self.tr(key), val)
+            widgetComponent = self.buildWidget(key, self.translate_(key), val)
             layout.addWidget(widgetComponent)
         widget.setLayout(layout)
         gridLayout.addWidget(widget, 1, 0, 1, 1)
@@ -277,7 +277,7 @@ class SettingComponent:
         pushButton = QPushButton()
         pushButton.setIcon(QIcon(':/setting/file.svg'))
         fileDialog = QFileDialog(self.window)
-        fileDialog.setWindowTitle(f'select directory with {self._name}')
+        fileDialog.setWindowTitle(f'{self.translate_("Select directory for")} {self._displayText}')
         fileDialog.setStyleSheet("color: black;")
         fileDialog.setFileMode(QFileDialog.FileMode.Directory)
         fileDialog.setDirectory(self._defaultValue)
@@ -295,7 +295,7 @@ class Setting:
         super().__init__()
 
         self.window = window
-        self.tr = window.tr
+        self.translate = window.tr
         self.config = config
         self.configTran = config.getConfigTran()
 
@@ -319,12 +319,12 @@ class Setting:
             titleWidget.setObjectName('titleWidget')
 
             titleLabel = QLabel()
-            titleLabel.setText(self.tr(titleName))
+            titleLabel.setText(self.translate(titleName))
             titleLabel.setObjectName('titleLabel')
             titleLayout.addWidget(titleLabel)
 
             for name, val in self.config.config[titleName].items():
-                displayText = self.tr(name)
+                displayText = self.translate(name)
                 widget = self.settingCom.buildWidget(name, displayText, val)
                 if widget:
                     titleLayout.addWidget(widget)

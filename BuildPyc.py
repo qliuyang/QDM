@@ -1,25 +1,17 @@
 import shutil
-import subprocess
 from pathlib import Path
+import compileall
 
 
 class Builder:
     def __init__(self):
-        self.src = Path('src')
-        cmd = ['easycython']
-        for file in self.src.glob('*.py'):
-            cmd.append(str(file))
-        subprocess.run(cmd)
+        self.src = Path('src').resolve()
+        self.build = Path('build').resolve()
 
-        for file in self.src.glob('*.c'):
-            file.unlink()
-        for file in self.src.glob('*.html'):
-            file.unlink()
+        compileall.compile_dir('src', force=True)
+        self.move_files_with_extension(self.src / '__pycache__', self.build / 'script', '.pyc')
 
-        self.move_files_with_extension(Path.cwd(), 'PyStand-py38-pyside2-lite/script', '.pyd')
-
-    @staticmethod
-    def move_files_with_extension(source_dir, target_dir, extension):
+    def move_files_with_extension(self, source_dir, target_dir, extension):
         """
         将 source_dir 文件夹下指定后缀的文件移动到 target_dir 文件夹。
 
@@ -36,12 +28,18 @@ class Builder:
 
         # 遍历源文件夹中的所有文件
         for file_path in source_dir.glob(f'*{extension}'):
+            file_name = self.getClearFileName(file_path.name)
             # 构建目标文件路径
-            new_file_path = target_path / file_path.name
+            new_file_path = target_path / file_name
 
             # 移动文件
             shutil.move(str(file_path), str(new_file_path))
             print(f'Moved: {file_path} -> {new_file_path}')
+
+    @staticmethod
+    def getClearFileName(fileName: str):
+        fileNameList = fileName.split('.')
+        return fileNameList[0] + '.pyc'
 
 
 if __name__ == '__main__':

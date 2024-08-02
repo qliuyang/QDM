@@ -5,13 +5,13 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 import requests
-from PySide6.QtCore import QThread, Signal, QFileInfo, QMutex, QObject
+from PySide6.QtCore import QThread, Signal, QFileInfo, QMutex, QObject, Qt
 from PySide6.QtWidgets import QFileIconProvider, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSpacerItem, QSizePolicy, \
     QMenu, QListWidget, QListWidgetItem
 from qfluentwidgets import ProgressBar
 from qframelesswindow import FramelessWindow
 from Ui_MoreInfo import Ui_Form as MoreInfoForm
-from config import Config,Style
+from config import Config, Style
 
 
 def convertBytes(byte) -> Tuple[float, str]:
@@ -374,27 +374,6 @@ class DownloadWidget(QWidget):
         self.downloader = downloader
         self.moreInfo = MoreInfo(downloader)
 
-    def contextMenuEvent(self, event):
-        menu = QMenu(self)
-        delete = menu.addAction(self.tr("Delete"))
-        stop = menu.addAction(self.tr("stop"))
-        continue_ = menu.addAction(self.tr("Continue"))
-        moreInfo = menu.addAction(self.tr("More Information"))
-
-        action = menu.exec_(self.mapToGlobal(event.pos()))
-
-        if action == delete:
-            self.downloader.quit()
-            self.deleteLater()
-        elif action == stop:
-            self.downloader.stop()
-        elif action == continue_:
-            self.downloader.mode = self.downloader.continueDownload
-            self.downloader.start()
-        elif action == moreInfo:
-            self.moreInfo.setInfo()
-            self.moreInfo.show()
-
     def updateProgress(self, num: Progress):
         self.mutexProgress.lock()
         self.downloadProgress.setValue(num.progress)
@@ -456,6 +435,30 @@ class MoreInfo(FramelessWindow, MoreInfoForm):
 class DownloadWidgetList(QListWidget):
     def __init__(self, parent):
         super().__init__(parent)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.showContextMenu)
+
+    def showContextMenu(self, position):
+        item: QListWidgetItem = self.itemAt(position)
+        if item:
+            menu = QMenu(self)
+            delete = menu.addAction(self.tr("Delete"))
+            stop = menu.addAction(self.tr("stop"))
+            continue_ = menu.addAction(self.tr("Continue"))
+            moreInfo = menu.addAction(self.tr("More Information"))
+
+            action = menu.exec_(self.mapToGlobal(position))
+            widget:DownloadWidget = self.itemWidget(item)
+            if action == delete:
+                widget.downloader.quit()
+                self.takeItem(self.row(item))
+            elif action == stop:
+                widget.downloader.stop()
+            elif action == continue_:
+                widget.downloader.continueDownload()
+            elif action == moreInfo:
+                widget.moreInfo.setInfo()
+                widget.moreInfo.show()
 
     def filterItems(self, text: str):
         for i in range(self.count()):
@@ -481,7 +484,7 @@ class DownloadEngine:
         self._downloaderList = []
         self._downloadConfig = config.getDownloadConfig()
         self._config = config
-        self._ui = listWidget
+        self._listWidget = listWidget
 
     def readPausedDownload(self):
         download_info_path = Path(self._downloadConfig['downloadInfoPath'])
@@ -522,7 +525,7 @@ class DownloadEngine:
 
         widget = self.getWidgetWithDownloader(downloader)
         self._downloadWidgetList.append(widget)
-        self._ui.addDownloadWidget(widget)
+        self._listWidget.addDownloadWidget(widget)
 
         return downloader
 

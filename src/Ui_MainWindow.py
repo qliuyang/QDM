@@ -205,7 +205,7 @@ class Ui_MainWindow(object):
         self.versionLabel.setText(QCoreApplication.translate("MainWindow", u"V1.0 Demo", None))
         self.pushButton.setText("")
         self.searchLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter the history download file", None))
-        self.newDownloadEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u8f93\u5165\u7f51\u5740\u6dfb\u52a0\u65b0\u7684\u4e0b\u8f7d\u4efb\u52a1", None))
+        self.newDownloadEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter the URL to add a new download task", None))
         self.iconApp.setText("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"QDM - Quick Download Manager", None))
     # retranslateUi

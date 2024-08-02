@@ -72,5 +72,5 @@ if __name__ == '__main__':
     cover = CoverFile()
     cover.cover_ui_file()
     cover.cover_rc_file()
-    # cover.cover_ts_file()
-    # cover.cover_qm_file()
+    cover.cover_ts_file()
+    cover.cover_qm_file()
